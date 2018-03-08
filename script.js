@@ -32,6 +32,8 @@ function oncellclick(ev) {
 	var cellindex = cell.index();
 	currstate[cellindex] = !currstate[cellindex];
 	cell.css("backgroundColor", (currstate[cellindex] ? "#000" : "#fff"));
+	
+	refresh_seed();
 }
 
 function next_step(){
@@ -155,7 +157,7 @@ function oncellhoverout() {
 	$(".nextcellparent").removeClass("nextcellparent");
 }
 
-function clear_all() {
+function clear_all(seedbits) {
     squaresize = parseInt($("#squaresize").val());
 	canvastable.parent().attr("class", "s" + squaresize);
 	width = Math.floor(window.innerWidth / (squaresize + 1));
@@ -175,41 +177,64 @@ function clear_all() {
     currstate = new Array(width);
     nextstate = new Array(width);
 
-    var impulse = document.getElementsByName("impulse[]");
+	if (seedbits) {
+		currstate = seedbits;
+		
+	} else {
+		var impulse = document.getElementsByName("impulse[]");
 
-    for (var i = 0; i < width; i++) {
-        switch (starting) {
-            case "i":
-                if ((i == 0 && impulse[0].checked)
-                    || (i == Math.floor(width/2)-1 && impulse[1].checked)
-                    || (i == (width - 1) && impulse[2].checked))
-                    currstate[i] = true;
-                else currstate[i] = false;
-                break;
-            case "25":
-                if (i % 4)
-                    currstate[i] = false;
-                else currstate[i] = true;
-                break;
-            case "50":
-                if (i % 2)
-                    currstate[i] = false;
-                else currstate[i] = true;
-                break;
-            case "75":
-                if (i % 4)
-                    currstate[i] = true;
-                else currstate[i] = false;
-                break;
-            case "r":
-                if (Math.floor(Math.random() * 2))
-                    currstate[i] = true;
-                else currstate[i] = false;
-                break;
-        }
-    }
+		for (var i = 0; i < width; i++) {
+			switch (starting) {
+				case "i":
+					if ((i == 0 && impulse[0].checked)
+						|| (i == Math.floor(width/2)-1 && impulse[1].checked)
+						|| (i == (width - 1) && impulse[2].checked))
+						currstate[i] = true;
+					else currstate[i] = false;
+					break;
+				case "25":
+					if (i % 4)
+						currstate[i] = false;
+					else currstate[i] = true;
+					break;
+				case "50":
+					if (i % 2)
+						currstate[i] = false;
+					else currstate[i] = true;
+					break;
+				case "75":
+					if (i % 4)
+						currstate[i] = true;
+					else currstate[i] = false;
+					break;
+				case "r":
+					if (Math.floor(Math.random() * 2))
+						currstate[i] = true;
+					else currstate[i] = false;
+					break;
+			}
+		}
+	}
     currrow = -1;
 	draw_row();
+	refresh_seed();
+}
+
+function set_seed() {
+	var seedbits = $("#seed")
+		.val()
+		.split("")
+		.map(function(b) { return b == "1"; });
+	
+	clear_all(seedbits);
+}
+
+function refresh_seed() {
+	var seedbits = currstate
+		.map(function(b){ return b ? "1" : "0"})
+		.join("");
+		
+	$("#seed").val(seedbits);
 }
 
 function start(limitedsteps){

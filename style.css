@@ -11,6 +11,10 @@ input[type=number] {
 	text-align: center;
 }
 
+#seed {
+	width: 99%;
+	font-size: 50%;
+}
 
 #ruletable > tbody > tr > td,
 #ruletable > tr > td {
