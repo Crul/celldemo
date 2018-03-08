@@ -1,6 +1,6 @@
 var rule = 0;
-var starting = "i";
-var scrollmode = "scroll";
+var starting;
+var scrollmode;
 var canvasdiv, canvastable;
 var currstate, nextstate;
 var timer;
@@ -14,8 +14,10 @@ $(document).ready(init);
 function init() {
     canvasdiv = $("#canvasdiv")[0];
     canvastable = $("#canvastable tbody");
+	starting = $(document.getElementsByName("condition")).filter(":checked").val();
+	scrollmode = $(document.getElementsByName("scroll")).filter(":checked").val();
 	canvastable.click(oncellclick);
-    rule_set(4);
+    rule_set(110);
     restart();
 }
 
