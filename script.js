@@ -24,8 +24,8 @@ function oncellclick(ev) {
 	if (targetcell.tagName != "TD")
 		return;
 	
-	var rowindex = $(targetcell.parentElement).index();
-	if (rowindex != currrow)
+	var iscurrrow = $(targetcell.parentElement).hasClass("currrow");
+	if (!iscurrrow)
 		return;
 	
 	var cell = $(targetcell);
