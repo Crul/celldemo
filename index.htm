@@ -4,207 +4,182 @@
 	<meta charset="UTF-8">
 	<title>Elementary cellular automaton simulator</title>
 	
-	<style type="text/css">
-		td {
-			width: 40px;
-		}
-	</style>
-	
-	<script type="text/javascript">
-	<!--
-		var rule = 0;
-		var starting = "i";
-		
-		var canvas, context;
-		
-		var currstate, nextstate;
-		
-		var timer;
-		var currrow = 0;
-		
-		function init() {
-			//create a drawing context
-			canvas = document.getElementById("canvas");
-			context = canvas.getContext('2d');
-			
-			//default rule
-			rule_set(90);
-		}
-		
-		function draw_row() {
-			var scroll = document.getElementById("scroll").checked;
-			
-			if (!scroll || currrow < canvas.height - 1) {
-				currrow++;
-				currrow %= canvas.height;
-			} else {
-				var data = context.getImageData(0, 1, canvas.width, canvas.height - 1);
-				context.putImageData(data, 0, 0);
-			}
-		
-			for (var i = 0; i < canvas.width; i++) {
-				//draw each cell in the current state
-				if (currstate[i])
-					context.fillStyle = "rgb(0, 0, 0)";
-				else context.fillStyle = "rgb(255, 255, 255)";
-				context.fillRect(i, currrow, 1, 1);
-			
-				//calculate each cell in the next state of the simulation
-				var l, c, r;
-				if (i == 0) {
-					l = false; c = currstate[0]; r = currstate[1];
-				} else if (i == canvas.width - 1) {
-					l = currstate[i-1]; c = currstate[i]; r = false;
-				} else {
-					l = currstate[i-1]; c = currstate[i]; r = currstate[i+1];
-				}
-	
-				var n = 0;
-				if (l == true) n |= 4;
-				if (c == true) n |= 2;
-				if (r == true) n |= 1;
-				
-				nextstate[i] = (rule & Math.pow(2, n)) > 0;
-				
-			}
-			
-			for (var i = 0; i < canvas.width; i++)
-				currstate[i] = nextstate[i];
-			
-			//draw 100 rows/sec
-			if (timer) setTimeout(draw_row, 10);
-			
-		}
-		
-		function start(){
-			//clear canvas, reset row, unpause, etc.
-			context.clearRect(0, 0, canvas.width, canvas.height);
-		
-			//init the state arrays
-			currstate = new Array(canvas.width);
-			nextstate = new Array(canvas.width);
-			
-			var impulse = document.getElementsByName("impulse[]");
-			
-			for (var i = 0; i < canvas.width; i++) {
-				switch (starting) {
-					case 'i':
-						if ((i == 0 && impulse[0].checked)
-							|| (i == Math.floor(canvas.width/2)-1 && impulse[1].checked)
-							|| (i == canvas.width - 1 && impulse[2].checked))
-							currstate[i] = true;
-						else currstate[i] = false;
-						break;
-					case '25':
-						if (i % 4)
-							currstate[i] = false;
-						else currstate[i] = true;
-						break;
-					case '50':
-						if (i % 2)
-							currstate[i] = false;
-						else currstate[i] = true;
-						break;
-					case '75':
-						if (i % 4)
-							currstate[i] = true;
-						else currstate[i] = false;
-						break;
-					case 'r':
-						if (Math.floor(Math.random() * 2))
-							currstate[i] = true;
-						else currstate[i] = false;
-						break;
-				}
-			}
-			
-			currrow = -1;
-			document.getElementById("pause").disabled = "";
-			unpause();
-		}
-		
-		function pause() {
-			//pause the simulation
-			var button = document.getElementById("pause");
-			button.value = "Unpause";
-			timer = clearTimeout(timer);
-			button.onclick = unpause;
-		}
-		
-		function unpause() {
-			var button = document.getElementById("pause");
-			button.value = "Pause";
-			if (!timer) timer = setTimeout(draw_row, 10);
-			button.onclick = pause;
-		}
-		
-		function rule_xor(num) {
-			//turn on or off one of the next-state rules
-			// where num is a power of 2 corresponding to one of the bits in the rule number
-			rule ^= num;
-			document.getElementById("rule_").innerHTML = rule + '';
-		}
-		
-		function rule_set(num) {
-			//set the simulation's next state rule set to a certain Wolfram number
-			rule = Math.floor(num % 256);
-			document.getElementById("rule_").innerHTML = rule + '';
-			
-			//set or clear each checkbox on the page
-			var checks = document.getElementsByName("rule[]");
-			for (var i = 0; i < 8; i++)
-				checks[i].checked = ((rule & Math.pow(2, 7-i)) > 0);
-		}
-	-->
-	</script>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
-<body onload="init()">
-	<a href="https://github.com/devinacker/celldemo/wiki" target="_blank">Readme</a> - 
-	<a href="http://mathworld.wolfram.com/ElementaryCellularAutomaton.html" target="_blank">About elementary cellular automata</a><br>
-	About <a href="http://en.wikipedia.org/wiki/Rule_30" target="_blank">Rule 30</a> - 
-	<a href="http://en.wikipedia.org/wiki/Rule_90" target="_blank">Rule 90</a> - 
-	<a href="http://en.wikipedia.org/wiki/Rule_110" target="_blank">Rule 110</a> - 
-	<a href="http://en.wikipedia.org/wiki/Rule_184" target="_blank">Rule 184</a>
-
-	<p></p>Create a next-state rule set, or select a preset.<br>
-	<input type="button" value="Rule 30" onclick="rule_set(30)">
-	<input type="button" value="Rule 90" onclick="rule_set(90)">
-	<input type="button" value="Rule 110" onclick="rule_set(110)">
-	<input type="button" value="Rule 184" onclick="rule_set(184)">
-	<input type="button" value="Random" onclick="rule_set(255 * Math.random())">
-	<table>
-	<tr><td></td><td>111</td><td>110</td><td>101</td><td>100</td>
-	<td>011</td><td>010</td><td>001</td><td>000</td></tr>
-	<tr><td id="rule_">0</td>
-	<td><input type="checkbox" name="rule[]" onclick="rule_xor(128)"></td>
-	<td><input type="checkbox" name="rule[]" onclick="rule_xor(64)"></td>
-	<td><input type="checkbox" name="rule[]" onclick="rule_xor(32)"></td>
-	<td><input type="checkbox" name="rule[]" onclick="rule_xor(16)"></td>
-	<td><input type="checkbox" name="rule[]" onclick="rule_xor(8)"></td>
-	<td><input type="checkbox" name="rule[]" onclick="rule_xor(4)"></td>
-	<td><input type="checkbox" name="rule[]" onclick="rule_xor(2)"></td>
-	<td><input type="checkbox" name="rule[]" onclick="rule_xor(1)"></td>
+<body>
+	<table id="configtable">
+  <tr>
+    <td colspan="3">
+      <label><input type="radio" name="condition" onclick="starting='i'" checked> Impulse</label>
+    </td>
+    <td><label><input type="radio" name="condition" onclick="starting='25'"> 25%</label><br></td>
+    <td><label><input type="radio" name="condition" onclick="starting='50'"> 50%</label><br></td>
+    <td><label><input type="radio" name="condition" onclick="starting='75'"> 75%</label><br></td>
+    <td><label><input type="radio" name="condition" onclick="starting='r'"> Random</label><br></td>
 	</tr>
-	</table>
+  <tr>
+    <td><label><input type="checkbox" name="impulse[]"> Left</label></td>
+    <td><label><input type="checkbox" name="impulse[]" checked> Center</label></td>
+    <td><label><input type="checkbox" name="impulse[]"> Right</label><br></td>
+  </tr>
+  </table>
 	<hr>
-	Select a starting condition:
-	<table width=50%><tr>
-	<td><label><input type="radio" name="condition" onclick="starting='i'" checked> Impulse</label><br>
-	<label><input type="checkbox" name="impulse[]"> Left</label><br>
-	<label><input type="checkbox" name="impulse[]" checked> Center</label><br>
-	<label><input type="checkbox" name="impulse[]"> Right</label><br>
-	</td>
-	<td><label><input type="radio" name="condition" onclick="starting='25'"> 25%</label><br>
-	<label><input type="radio" name="condition" onclick="starting='50'"> 50%</label><br>
-	<label><input type="radio" name="condition" onclick="starting='75'"> 75%</label><br>
-	<label><input type="radio" name="condition" onclick="starting='r'"> Random</label><br>
-	</td>
-	</tr></table>
+  <table id="scrolltable">
+  <tr>
+    <td>
+      Size: <input type="number" id="squaresize" value="6" min="3" max="30" onchange="restart()">
+      <input type="button" id="start" value="Clear" onclick="restart()">
+      <input type="button" id="next" value="Next" onclick="next_step()">
+      <input type="button" id="start" value="Start" onclick="start()">
+      <input type="button" id="pause" value="Stop" onclick="stop()">
+    </td>
+    <td><label>Append<br><input type="radio" name="scroll" onclick="scrollmode='append'"></label></td>
+    <td><label>Scroll<br><input type="radio" name="scroll" onclick="scrollmode='scroll'" checked></label></td>
+    <td><label>Redraw<br><input type="radio" name="scroll" onclick="scrollmode='redraw'"></label></td>
+    </tr>
+  </table>
+  
+  <div id="canvasdiv">
+    <table id="canvastable"><tbody></tbody></table>
+  </div>
+  
+  <hr>
+	<table id="ruletable">
+	<tr class="rulecomponenttitles">
+    <td></td>
+    <td id="rct111">1 1 1</td>
+    <td id="rct110">1 1 0</td>
+    <td id="rct101">1 0 1</td>
+    <td id="rct100">1 0 0</td>
+    <td id="rct011">0 1 1</td>
+    <td id="rct010">0 1 0</td>
+    <td id="rct001">0 0 1</td>
+    <td id="rct000">0 0 0</td>
+  </tr>
+	<tr>
+    <td id="rule_" rowspan="2">0</td>
+    <td>
+      <table>
+      <tr><td class="on"></td><td class="on"></td><td class="on"></td></tr>
+      <tr><td></td><td class="off">
+        <label>
+          <input type="checkbox" name="rule[]" id="rcc111" onclick="rule_xor(128)">
+          <span class="checkmark"></span>
+        </label>
+      </td><td></td></tr>
+      </table>
+    </td>
+    <td>
+      <table>
+      <tr><td class="on"></td><td class="on"></td><td class="off"></td></tr>
+      <tr><td></td><td class="off">
+        <label>
+          <input type="checkbox" name="rule[]" id="rcc110" onclick="rule_xor(64)">
+          <span class="checkmark"></span>
+        </label>
+      </td><td></td></tr>
+      </table>
+    </td>
+    <td>
+      <table>
+      <tr><td class="on"></td><td class="off"></td><td class="on"></td></tr>
+      <tr><td></td><td class="off">
+        <label>
+          <input type="checkbox" name="rule[]" id="rcc101" onclick="rule_xor(32)">
+          <span class="checkmark"></span>
+        </label>
+      </td><td></td></tr>
+      </table>
+    </td>
+    <td>
+      <table>
+      <tr><td class="on"></td><td class="off"></td><td class="off"></td></tr>
+      <tr><td></td><td class="off">
+        <label>
+          <input type="checkbox" name="rule[]" id="rcc100" onclick="rule_xor(16)">
+          <span class="checkmark"></span>
+        </label>
+      </td><td></td></tr>
+      </table>
+    </td>
+    <td>
+      <table>
+      <tr><td class="off"></td><td class="on"></td><td class="on"></td></tr>
+      <tr><td></td><td class="off">
+        <label>
+          <input type="checkbox" name="rule[]" id="rcc011" onclick="rule_xor(8)">
+          <span class="checkmark"></span>
+        </label>
+      </td><td></td></tr>
+      </table>
+    </td>
+    <td>
+      <table>
+      <tr><td class="off"></td><td class="on"></td><td class="off"></td></tr>
+      <tr><td></td><td class="off">
+        <label>
+          <input type="checkbox" name="rule[]" id="rcc010" onclick="rule_xor(4)">
+          <span class="checkmark"></span>
+        </label>
+      </td><td></td></tr>
+      </table>
+    </td>
+    <td>
+      <table>
+      <tr><td class="off"></td><td class="off"></td><td class="on"></td></tr>
+      <tr><td></td><td class="off">
+        <label>
+          <input type="checkbox" name="rule[]" id="rcc001" onclick="rule_xor(2)">
+          <span class="checkmark"></span>
+        </label>
+      </td><td></td></tr>
+      </table>
+    </td>
+    <td>
+      <table>
+      <tr><td class="off"></td><td class="off"></td><td class="off"></td></tr>
+      <tr><td></td><td class="off">
+        <label>
+          <input type="checkbox" name="rule[]" id="rcc000" onclick="rule_xor(1)">
+          <span class="checkmark"></span>
+        </label>
+      </td><td></td></tr>
+      </table>
+    </td>
+	</tr>
+	<tr class="rulecomponents">
+    <td>&nbsp;<span id="rc128">128</span></td>
+    <td>&nbsp;<span id="rc64">+ 64</span></td>
+    <td>&nbsp;<span id="rc32">+ 32</span></td>
+    <td>&nbsp;<span id="rc16">+ 16</span></td>
+    <td>&nbsp;<span  id="rc8">+  8</span></td>
+    <td>&nbsp;<span  id="rc4">+  4</span></td>
+    <td>&nbsp;<span  id="rc2">+  2</span></td>
+    <td>&nbsp;<span  id="rc1">+  1</span></td>
+  </tr>
+  </table>
+
 	<hr>
-	<input type="button" id="start" value="Start" onclick="start()">
-	<input type="button" id="pause" value="Pause" disabled>
-	<label><input type="checkbox" id="scroll" checked> Scroll continuously</label>
-	<br><canvas id="canvas" width="600" height="300">Whoops! Looks like you have JavaScript disabled, or your browser isn't HTML5 compatible.</canvas>
+	<a href="https://github.com/devinacker/celldemo/" target="_blank" style="float: right">forked from devinacker/celldemo</a>
+
+	<input type="button" value="Rule 0"   onclick="rule_set(0)">
+	<input type="button" value="Rule 255" onclick="rule_set(255)">
+	<input type="button" value="Rule 4"   onclick="rule_set(4)">
+	<input type="button" value="Rule 2"   onclick="rule_set(2)">
+	<input type="button" value="Rule 184" onclick="rule_set(184)">
+	<input type="button" value="Rule 204" onclick="rule_set(204)">
+	<input type="button" value="Rule 51"  onclick="rule_set(51)">
+	<input type="button" value="Rule 136" onclick="rule_set(136)">
+	<input type="button" value="Rule 192" onclick="rule_set(192)">
+	<input type="button" value="Rule 1"   onclick="rule_set(1)">
+	<input type="button" value="Rule 18"  onclick="rule_set(18)">
+	<input type="button" value="Rule 90"  onclick="rule_set(90)">
+	<input type="button" value="Rule 30"  onclick="rule_set(30)">
+	<input type="button" value="Rule 110" onclick="rule_set(110)">
+	<input type="button" value="Random"   onclick="rule_set(255 * Math.random())">
+  
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="script.js"></script>
 </body>
 </html>

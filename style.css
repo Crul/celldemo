@@ -1,0 +1,215 @@
+body {
+	overflow-y: scroll;
+}
+
+hr {
+	margin: 4px 0;
+}
+
+input[type=number] {
+	width: 48px;
+	text-align: center;
+}
+
+
+#ruletable > tbody > tr > td,
+#ruletable > tr > td {
+	border: solid 1px #eee;
+	padding: 0 30px;
+}
+
+#ruletable > tbody > tr > td#rule_ {
+	width: 90px;
+	font-size: 300%;
+	padding: 0;
+}
+
+#ruletable > tbody > tr:first-child > td,
+#ruletable  > tr:first-child > td {
+	background-color: #333;
+	padding: 4px 0;
+	color: #fff;
+}
+
+#ruletable > tbody > tr:first-child > td:first-child,
+#ruletable > tr:first-child > td:first-child,
+#ruletable > tbody > tr:nth-child(2) > td:first-child,
+#ruletable > tr:nth-child(2) > td:first-child {
+	background-color: #fff;
+	border: none;
+}
+
+#ruletable td {
+	text-align: center;
+}
+
+#ruletable tr.rulecomponenttitles td {
+	font-family: Verdana;
+}
+
+#ruletable tr.rulecomponenttitles td.activeon {
+	background-color: #0c0;
+	color: #fff;
+}
+#ruletable tr.rulecomponenttitles td.activeoff {
+	background-color: #f00;
+	color: #fff;
+}
+
+tr.rulecomponents > td > span {
+	display: none
+}
+
+#ruletable table {
+	padding: 0;
+	margin: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+#ruletable table td {
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	margin: 0;
+	line-height: 0px;
+}
+
+#ruletable table td.on {
+	background-color: #000;
+	border: solid 2px #666;
+}
+
+#ruletable table td.off {
+	background-color: #fff;
+	border: solid 2px #666;
+}
+
+#ruletable .checkmark {
+	display: block;
+	cursor: pointer;
+	background-color: #fff;
+	width: 100%;
+	height: 16px;
+}
+
+#ruletable .checkmark:hover {
+	background-color: #faa;
+}
+
+#ruletable input[type=checkbox] {
+	display: none;
+}
+	
+#ruletable input[type=checkbox]:checked ~ .checkmark{
+	background-color: #000;
+}
+
+#ruletable input[type=checkbox]:checked ~ .checkmark:hover{
+	background-color: #600;
+}
+
+
+#configtable {
+	width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+#configtable td {
+	vertical-align: top;
+	text-align: center;
+}
+
+#configtable tr:first-child td {
+	border: solid 1px #ddd;
+}
+
+#configtable tr:first-child td:first-child {
+	width: 33%;
+	min-width: 340px;
+}
+
+#canvasdiv {
+	height: 400px;
+	overflow-y: scroll;
+}
+
+#canvastable {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+    border-spacing: 0;
+    border-collapse: separate;
+}
+#canvastable td {
+	padding: 0;
+	margin: 0;
+	border: solid 1px #ddd;
+	box-sizing: border-box;
+}
+
+#canvastable tr.currrow td {
+	border-color: #ccf;
+}
+	
+#canvastable tr.currrow td:hover {
+	cursor: pointer;
+	border-color: #00f;
+}
+
+#canvastable tr td.nextcell {
+	border-color: #f00;
+}
+
+#canvastable tr td.nextcellon {
+	background-color: #888;
+}
+
+#canvastable tr td.nextcellparent {
+	border-color: #0a0;
+}
+
+#canvastable.s1 td { height: 1px; }
+#canvastable.s2 td { height: 2px; }
+#canvastable.s3 td { height: 3px; }
+#canvastable.s4 td { height: 4px; }
+#canvastable.s5 td { height: 5px; }
+#canvastable.s6 td { height: 6px; }
+#canvastable.s7 td { height: 7px; }
+#canvastable.s8 td { height: 8px; }
+#canvastable.s9 td { height: 9px; }
+
+#canvastable.s10 td { height: 10px; }
+#canvastable.s11 td { height: 11px; }
+#canvastable.s12 td { height: 12px; }
+#canvastable.s13 td { height: 13px; }
+#canvastable.s14 td { height: 14px; }
+#canvastable.s15 td { height: 15px; }
+#canvastable.s16 td { height: 16px; }
+#canvastable.s17 td { height: 17px; }
+#canvastable.s18 td { height: 18px; }
+#canvastable.s19 td { height: 19px; }
+
+#canvastable.s20 td { height: 20px; }
+#canvastable.s21 td { height: 21px; }
+#canvastable.s22 td { height: 22px; }
+#canvastable.s23 td { height: 23px; }
+#canvastable.s24 td { height: 24px; }
+#canvastable.s25 td { height: 25px; }
+#canvastable.s26 td { height: 26px; }
+#canvastable.s27 td { height: 27px; }
+#canvastable.s28 td { height: 28px; }
+#canvastable.s29 td { height: 29px; }
+#canvastable.s30 td { height: 30px; }
+
+
+#scrolltable {
+	width: 100%;
+}
+#scrolltable td {
+	text-align: center;
+}
+#scrolltable td:first-child {
+	width: 50%;
+}
