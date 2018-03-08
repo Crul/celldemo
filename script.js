@@ -8,6 +8,7 @@ var currrow = 0;
 var squaresize;
 var width, height;
 var stepcount = -1;
+var timeoutinterval = 10;
 
 $(document).ready(init);
 
@@ -72,7 +73,7 @@ function next_row() {
 		stepcount--;
 	
     if (timer && stepcount != 0)
-		timer = setTimeout(next_row, 10);
+		timer = setTimeout(next_row, timeoutinterval);
 	else
 		timer = clearTimeout(timer);
 }
@@ -115,7 +116,7 @@ function draw_row() {
 
 function restart() {
 	stop();
-	setTimeout(clear_all, 15);
+	setTimeout(clear_all, timeoutinterval + 5);
 }
 
 function oncellhover(ev) {
@@ -139,13 +140,15 @@ function oncellhover(ev) {
 	var cellparentcenter = parentcells.eq(cellindex);
 	var cellparentright = (cellindex == (width - 1) ? undefined : parentcells.eq(cellindex+1));
 	
-	cellparentleft.addClass("nextcellparent");
+	if (cellparentleft)
+		cellparentleft.addClass("nextcellparent");
 	cellparentcenter.addClass("nextcellparent");
-	cellparentright.addClass("nextcellparent");
+	if (cellparentright)
+		cellparentright.addClass("nextcellparent");
 	
-	var bincomp = iscellactive(cellparentleft) ? "1" : "0";
-	bincomp += iscellactive(cellparentcenter) ? "1" : "0";
-	bincomp += iscellactive(cellparentright) ? "1" : "0";
+	var bincomp = cell_to_bit(cellparentleft);
+	bincomp += cell_to_bit(cellparentcenter);
+	bincomp += cell_to_bit(cellparentright);
 	
 	var isnextactive = $("#rcc" + bincomp).is(":checked");
 	$("#rct" + bincomp).addClass("active" + (isnextactive ? "on" : "off"));
@@ -154,8 +157,9 @@ function oncellhover(ev) {
 		cell.addClass("nextcellon");
 }
 
-function iscellactive(cell) {
-	return cell && cell.css("backgroundColor") == "rgb(0, 0, 0)"
+function cell_to_bit(cell) {
+	var iscellactive = (cell && cell.css("backgroundColor") == "rgb(0, 0, 0)");
+	return iscellactive ? "1" : "0"
 }
 
 function oncellhoverout() {
@@ -234,9 +238,13 @@ function get_initial_bit(impulse, i) {
 	}
 }
 
-function set_starting(start) {
-	starting = start;
+function set_starting(value) {
+	starting = value;
 	restart();
+}
+
+function set_scroll(value) {
+	scrollmode = value;
 }
 
 function set_seed() {
@@ -251,7 +259,7 @@ function set_seed() {
 	conditionelems
 		.removeAttr("checked")
 		.filter("[value='s']")
-		.attr("checked", "checked");
+		.prop("checked", true);
 }
 
 function refresh_seed() {
@@ -268,7 +276,7 @@ function start(limitedsteps){
 	
 	stepcount = (limitedsteps ? parseInt($("#steps").val()) : -1);
 	
-	timer = setTimeout(next_row, 10);
+	timer = setTimeout(next_row, timeoutinterval);
 }
 
 function stop() {
