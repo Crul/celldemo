@@ -223,7 +223,20 @@ function get_initial_bit(impulse, i) {
 			
 		case "r":
 			return Math.floor(Math.random() * 2);
+			
+		case "s":
+			var seedbits = $("#seed")
+				.val()
+				.split("")
+				.map(function(b) { return b == "1"; });
+				
+			return seedbits[i];
 	}
+}
+
+function set_starting(start) {
+	starting = start;
+	restart();
 }
 
 function set_seed() {
@@ -233,6 +246,12 @@ function set_seed() {
 		.map(function(b) { return b == "1"; });
 	
 	clear_all(seedbits);
+	
+	var conditionelems = $(document.getElementsByName("condition"));
+	conditionelems
+		.removeAttr("checked")
+		.filter("[value='s']")
+		.attr("checked", "checked");
 }
 
 function refresh_seed() {
