@@ -190,40 +190,36 @@ function clear_all(seedbits) {
 		var impulse = document.getElementsByName("impulse[]");
 
 		for (var i = 0; i < width; i++) {
-			switch (starting) {
-				case "i":
-					if ((i == 0 && impulse[0].checked)
-						|| (i == Math.floor(width/2)-1 && impulse[1].checked)
-						|| (i == (width - 1) && impulse[2].checked))
-						currstate[i] = true;
-					else currstate[i] = false;
-					break;
-				case "25":
-					if (i % 4)
-						currstate[i] = false;
-					else currstate[i] = true;
-					break;
-				case "50":
-					if (i % 2)
-						currstate[i] = false;
-					else currstate[i] = true;
-					break;
-				case "75":
-					if (i % 4)
-						currstate[i] = true;
-					else currstate[i] = false;
-					break;
-				case "r":
-					if (Math.floor(Math.random() * 2))
-						currstate[i] = true;
-					else currstate[i] = false;
-					break;
-			}
+			currstate[i] = get_initial_bit(impulse, i);
 		}
 	}
     currrow = -1;
 	draw_row();
 	refresh_seed();
+}
+
+function get_initial_bit(impulse, i) {
+	switch (starting) {
+		case "i":
+			return ((i == 0 && impulse[0].checked)
+				|| (i == Math.floor(width/2)-1 && impulse[1].checked)
+				|| (i == (width - 1) && impulse[2].checked));
+				
+		case "25":
+			return !(i % 4);
+			
+		case "50":
+			return !(i % 2);
+			
+		case "75":
+			return (i % 4);
+			
+		case "100":
+			return true;
+			
+		case "r":
+			return Math.floor(Math.random() * 2);
+	}
 }
 
 function set_seed() {
