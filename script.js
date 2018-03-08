@@ -119,7 +119,7 @@ function restart() {
 function oncellhover(ev) {
 	var rowindex = $(ev.target.parentElement).index();
 	var currrowindex = $(".currrow").index();
-	console.log(rowindex, currrowindex);
+	
 	if (rowindex > (currrowindex + 1))
 		return;
 	
