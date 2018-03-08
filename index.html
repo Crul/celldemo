@@ -162,21 +162,37 @@
 
 	<hr>
 	<a href="https://github.com/devinacker/celldemo/" target="_blank" style="float: right">forked from devinacker/celldemo</a>
-
-	<input type="button" value="Rule 0"   onclick="rule_set(0)">
-	<input type="button" value="Rule 255" onclick="rule_set(255)">
-	<input type="button" value="Rule 4"   onclick="rule_set(4)">
-	<input type="button" value="Rule 2"   onclick="rule_set(2)">
-	<input type="button" value="Rule 184" onclick="rule_set(184)">
-	<input type="button" value="Rule 204" onclick="rule_set(204)">
-	<input type="button" value="Rule 51"  onclick="rule_set(51)">
-	<input type="button" value="Rule 136" onclick="rule_set(136)">
-	<input type="button" value="Rule 192" onclick="rule_set(192)">
-	<input type="button" value="Rule 1"   onclick="rule_set(1)">
-	<input type="button" value="Rule 18"  onclick="rule_set(18)">
-	<input type="button" value="Rule 90"  onclick="rule_set(90)">
-	<input type="button" value="Rule 30"  onclick="rule_set(30)">
-	<input type="button" value="Rule 110" onclick="rule_set(110)">
+  
+<!--
+  Rule   0: Nada
+  Rule 255: Todo
+  Rule 204: Constante
+  Rule  51: Alternar
+  Rule 170: Diagonal Izq
+  Rule 240: Diagonal Dch
+  Rule   4: Filtrar puntos aislados
+  Rule 136: Reducir pirámide izq
+  Rule 192: Reducir pirámide dch
+  Rule 184: Semi-complex
+  Rule  18: Complex
+  Rule  90: Complex/Chaos
+  Rule  30: Chaos
+  Rule 110: Chaos
+-->
+	<input type="button" value="0"   onclick="rule_set(0)"   title="Nada">
+	<input type="button" value="255" onclick="rule_set(255)" title="Todo">
+	<input type="button" value="204" onclick="rule_set(204)" title="Constante">
+	<input type="button" value="51"  onclick="rule_set(51)"  title="Alternar">
+	<input type="button" value="170" onclick="rule_set(170)" title="Diagonal Izq">
+	<input type="button" value="240" onclick="rule_set(240)" title="Diagonal Dch">
+	<input type="button" value="4"   onclick="rule_set(4)"   title="Filtrar puntos aislados">
+	<input type="button" value="136" onclick="rule_set(136)" title="Reducir pirámide izq">
+	<input type="button" value="192" onclick="rule_set(192)" title="Reducir pirámide dch">
+	<input type="button" value="18"  onclick="rule_set(18)"  title="Semi-complex">
+	<input type="button" value="184" onclick="rule_set(184)" title="Complex">
+	<input type="button" value="90"  onclick="rule_set(90)"  title="Complex/Chaos">
+	<input type="button" value="30"  onclick="rule_set(30)"  title="Chaos">
+	<input type="button" value="110" onclick="rule_set(110)" title="Chaos">
 	<input type="button" value="Random"   onclick="rule_set(255 * Math.random())">
   
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
