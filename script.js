@@ -68,7 +68,7 @@ function next_row() {
 	if (stepcount > 0)
 		stepcount--;
 	
-    if (timer && stepcount > 0)
+    if (timer && stepcount != 0)
 		timer = setTimeout(next_row, 10);
 	else
 		timer = clearTimeout(timer);
