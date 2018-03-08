@@ -5,6 +5,7 @@ html, body, div, table, td {
 
 body {
 	overflow-y: scroll;
+	min-width: 1058px;
 }
 
 hr {

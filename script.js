@@ -18,30 +18,61 @@ function init() {
 	starting = $(document.getElementsByName("condition")).filter(":checked").val();
 	scrollmode = $(document.getElementsByName("scroll")).filter(":checked").val();
 	canvastable.click(oncellclick);
-    rule_set(110);
-    restart();
+    rule_set(165);
+    clear_all();
 }
 
-function oncellclick(ev) {
-	var targetcell = ev.target;
-	if (targetcell.tagName != "TD")
-		return;
+function set_starting(elem) {
+	starting = elem.value;
+	if (starting == "i") {
+		$(".impulse").show();
+	} else {
+		$(".impulse").hide();
+	}
+	$(elem).closest("table").find("label.active").removeClass("active");
+	$(elem.parentElement).addClass("active");
+	clear_all();
+}
+
+function set_scroll(value) {
+	scrollmode = value;
+}
+
+function set_seed() {
+	var seedbits = $("#seed")
+		.val()
+		.split("")
+		.map(function(b) { return b == "1"; });
 	
-	var iscurrrow = $(targetcell.parentElement).hasClass("currrow");
-	if (!iscurrrow)
-		return;
+	set_initial_state(seedbits);
 	
-	var cell = $(targetcell);
-	var cellindex = cell.index();
-	currstate[cellindex] = !currstate[cellindex];
-	cell.css("backgroundColor", (currstate[cellindex] ? "#000" : "#fff"));
-	
-	refresh_seed();
+	var conditionelems = $(document.getElementsByName("condition"));
+	conditionelems
+		.removeAttr("checked")
+		.filter("[value='s']")
+		.prop("checked", true);
+}
+
+function clear_all() {
+	stop();
+	setTimeout(set_initial_state, timeoutinterval + 5);
 }
 
 function next_step(){
 	if (!timer)
 		next_row();
+}
+
+function start(limitedsteps){
+    if (timer)
+		return;
+	
+	stepcount = (limitedsteps ? parseInt($("#steps").val()) : -1);
+	timer = setTimeout(next_row, timeoutinterval);
+}
+
+function stop() {
+    timer = clearTimeout(timer);
 }
 
 function next_row() {
@@ -114,11 +145,6 @@ function draw_row() {
 	canvasdiv.scrollTop = canvasdiv.scrollHeight;
 }
 
-function restart() {
-	stop();
-	setTimeout(clear_all, timeoutinterval + 5);
-}
-
 function oncellhover(ev) {
 	var rowindex = $(ev.target.parentElement).index();
 	var currrowindex = $(".currrow").index();
@@ -157,11 +183,6 @@ function oncellhover(ev) {
 		cell.addClass("nextcellon");
 }
 
-function cell_to_bit(cell) {
-	var iscellactive = (cell && cell.css("backgroundColor") == "rgb(0, 0, 0)");
-	return iscellactive ? "1" : "0"
-}
-
 function oncellhoverout() {
 	$(".activeon").removeClass("activeon");
 	$(".activeoff").removeClass("activeoff");
@@ -169,7 +190,24 @@ function oncellhoverout() {
 	$(".nextcellparent").removeClass("nextcellparent");
 }
 
-function clear_all(seedbits) {
+function oncellclick(ev) {
+	var targetcell = ev.target;
+	if (targetcell.tagName != "TD")
+		return;
+	
+	var iscurrrow = $(targetcell.parentElement).hasClass("currrow");
+	if (!iscurrrow)
+		return;
+	
+	var cell = $(targetcell);
+	var cellindex = cell.index();
+	currstate[cellindex] = !currstate[cellindex];
+	cell.css("backgroundColor", (currstate[cellindex] ? "#000" : "#fff"));
+	
+	refresh_seed();
+}
+
+function set_initial_state(seedbits) {
     squaresize = parseInt($("#squaresize").val());
 	canvastable.parent().attr("class", "s" + squaresize);
 	width = Math.floor(window.innerWidth / (squaresize + 1));
@@ -238,35 +276,9 @@ function get_initial_bit(impulse, i) {
 	}
 }
 
-function set_starting(elem) {
-	starting = elem.value;
-	if (starting == "i") {
-		$(".impulse").show();
-	} else {
-		$(".impulse").hide();
-	}
-	$(elem).closest("table").find("label.active").removeClass("active");
-	$(elem.parentElement).addClass("active");
-	restart();
-}
-
-function set_scroll(value) {
-	scrollmode = value;
-}
-
-function set_seed() {
-	var seedbits = $("#seed")
-		.val()
-		.split("")
-		.map(function(b) { return b == "1"; });
-	
-	clear_all(seedbits);
-	
-	var conditionelems = $(document.getElementsByName("condition"));
-	conditionelems
-		.removeAttr("checked")
-		.filter("[value='s']")
-		.prop("checked", true);
+function cell_to_bit(cell) {
+	var iscellactive = (cell && cell.css("backgroundColor") == "rgb(0, 0, 0)");
+	return iscellactive ? "1" : "0"
 }
 
 function refresh_seed() {
@@ -275,19 +287,6 @@ function refresh_seed() {
 		.join("");
 		
 	$("#seed").val(seedbits);
-}
-
-function start(limitedsteps){
-    if (timer)
-		return;
-	
-	stepcount = (limitedsteps ? parseInt($("#steps").val()) : -1);
-	
-	timer = setTimeout(next_row, timeoutinterval);
-}
-
-function stop() {
-    timer = clearTimeout(timer);
 }
 
 function rule_xor(num) {

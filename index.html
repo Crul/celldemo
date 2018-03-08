@@ -20,9 +20,9 @@
     <td><label><input type="radio" name="condition" value="100" onclick="set_starting(this)">  100%</label><br></td>
 	</tr>
   <tr>
-    <td><label class="impulse"><input type="checkbox" name="impulse[]" onchange="restart()"> Left</label></td>
-    <td><label class="impulse"><input type="checkbox" name="impulse[]" onchange="restart()" checked> Center</label></td>
-    <td><label class="impulse"><input type="checkbox" name="impulse[]" onchange="restart()"> Right</label><br></td>
+    <td><label class="impulse"><input type="checkbox" name="impulse[]" onchange="clear_all()"> Left</label></td>
+    <td><label class="impulse"><input type="checkbox" name="impulse[]" onchange="clear_all()" checked> Center</label></td>
+    <td><label class="impulse"><input type="checkbox" name="impulse[]" onchange="clear_all()"> Right</label><br></td>
     <td>
       <label><input type="radio" name="condition" value="s" onclick="set_starting(this)"> Seed:</label>
     </td>
@@ -35,8 +35,8 @@
   <table id="scrolltable">
   <tr>
     <td>
-      Size: <input type="number" id="squaresize" value="16" min="3" max="30" onchange="restart()">
-      <input type="button" id="start" value="Clear" onclick="restart()">
+      Size: <input type="number" id="squaresize" value="16" min="3" max="30" onchange="clear_all()">
+      <input type="button" id="start" value="Clear" onclick="clear_all()">
       <input type="button" id="next" value="Next" onclick="next_step()">
       <input type="button" id="start" value="Start" onclick="start()">
       <input type="button" id="pause" value="Stop" onclick="stop()">
