@@ -11,22 +11,22 @@
 	<table id="configtable">
   <tr>
     <td colspan="3">
-      <label><input type="radio" name="condition" value="i" onclick="set_starting(this.value)" checked> Impulse</label>
+      <label class="active"><input type="radio" name="condition" value="i" onclick="set_starting(this)" checked> Impulse</label>
     </td>
-    <td><label><input type="radio" name="condition" value="r"   onclick="set_starting(this.value)"> Random</label><br></td>
-    <td><label><input type="radio" name="condition" value="25"  onclick="set_starting(this.value)">   25%</label><br></td>
-    <td><label><input type="radio" name="condition" value="50"  onclick="set_starting(this.value)">   50%</label><br></td>
-    <td><label><input type="radio" name="condition" value="70"  onclick="set_starting(this.value)">   75%</label><br></td>
-    <td><label><input type="radio" name="condition" value="100" onclick="set_starting(this.value)">  100%</label><br></td>
+    <td><label><input type="radio" name="condition" value="r"   onclick="set_starting(this)"> Random</label><br></td>
+    <td><label><input type="radio" name="condition" value="25"  onclick="set_starting(this)">   25%</label><br></td>
+    <td><label><input type="radio" name="condition" value="50"  onclick="set_starting(this)">   50%</label><br></td>
+    <td><label><input type="radio" name="condition" value="70"  onclick="set_starting(this)">   75%</label><br></td>
+    <td><label><input type="radio" name="condition" value="100" onclick="set_starting(this)">  100%</label><br></td>
 	</tr>
   <tr>
-    <td><label><input type="checkbox" name="impulse[]" onchange="restart()"> Left</label></td>
-    <td><label><input type="checkbox" name="impulse[]" onchange="restart()" checked> Center</label></td>
-    <td><label><input type="checkbox" name="impulse[]" onchange="restart()"> Right</label><br></td>
+    <td><label class="impulse"><input type="checkbox" name="impulse[]" onchange="restart()"> Left</label></td>
+    <td><label class="impulse"><input type="checkbox" name="impulse[]" onchange="restart()" checked> Center</label></td>
+    <td><label class="impulse"><input type="checkbox" name="impulse[]" onchange="restart()"> Right</label><br></td>
     <td>
-      <label for="seed"><input type="radio" name="condition" value="s" onclick="set_starting(this.value)"> Seed:</label>
+      <label><input type="radio" name="condition" value="s" onclick="set_starting(this)"> Seed:</label>
     </td>
-    <td colspan="3">
+    <td colspan="4">
       <input type="text" id="seed" onchange="set_seed()" onclick="this.select();">
     </td>
   </tr>

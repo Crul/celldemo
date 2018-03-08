@@ -238,8 +238,15 @@ function get_initial_bit(impulse, i) {
 	}
 }
 
-function set_starting(value) {
-	starting = value;
+function set_starting(elem) {
+	starting = elem.value;
+	if (starting == "i") {
+		$(".impulse").show();
+	} else {
+		$(".impulse").hide();
+	}
+	$(elem).closest("table").find("label.active").removeClass("active");
+	$(elem.parentElement).addClass("active");
 	restart();
 }
 

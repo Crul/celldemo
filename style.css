@@ -1,3 +1,8 @@
+html, body, div, table, td {
+	font-family: Arial;
+	font-size: 95%;
+}
+
 body {
 	overflow-y: scroll;
 }
@@ -10,6 +15,17 @@ label {
 	display: inline-block;
 	width: 100%;
 	cursor: pointer;
+	padding: 3px 0;
+}
+
+input[type=radio] {
+	vertical-align: bottom;
+	margin-bottom: 2px;
+}
+
+input[type=checkbox] {
+	margin: 0 0 2px 0;
+	vertical-align: bottom;
 }
 
 input[type=number] {
@@ -19,7 +35,7 @@ input[type=number] {
 
 #seed {
 	width: 99%;
-	font-size: 50%;
+	font-size: 66%;
 }
 
 #ruletable > tbody > tr > td,
@@ -39,7 +55,7 @@ input[type=number] {
 
 #ruletable > tbody > tr:first-child > td,
 #ruletable  > tr:first-child > td {
-	background-color: #333;
+	background-color: #333538;
 	padding: 4px 0;
 	color: #fff;
 }
@@ -88,6 +104,10 @@ tr.rulecomponents > td > span {
 	line-height: 0px;
 }
 
+#ruletable table td label {
+	padding: 0;
+}
+
 #ruletable table td.on {
 	background-color: #000;
 	border: solid 2px #666;
@@ -129,9 +149,14 @@ tr.rulecomponents > td > span {
     border-collapse: collapse;
 }
 
+#configtable input[type=radio] {
+	display: none;
+}
+
 #configtable td {
 	vertical-align: top;
 	text-align: center;
+	padding: 0;
 }
 
 #configtable tr:first-child td {
@@ -141,6 +166,11 @@ tr.rulecomponents > td > span {
 #configtable tr:first-child td:first-child {
 	width: 33%;
 	min-width: 340px;
+}
+
+#configtable td label.active {
+	background-color: #333538;
+	color: #fff;
 }
 
 #canvasdiv {
