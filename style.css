@@ -6,6 +6,12 @@ hr {
 	margin: 4px 0;
 }
 
+label {
+	display: inline-block;
+	width: 100%;
+	cursor: pointer;
+}
+
 input[type=number] {
 	width: 48px;
 	text-align: center;

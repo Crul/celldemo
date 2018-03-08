@@ -13,17 +13,17 @@
     <td colspan="3">
       <label><input type="radio" name="condition" onclick="starting='i'" checked> Impulse</label>
     </td>
+    <td><label><input type="radio" name="condition" onclick="starting='r'"> Random</label><br></td>
     <td><label><input type="radio" name="condition" onclick="starting='25'"> 25%</label><br></td>
     <td><label><input type="radio" name="condition" onclick="starting='50'"> 50%</label><br></td>
     <td><label><input type="radio" name="condition" onclick="starting='75'"> 75%</label><br></td>
-    <td><label><input type="radio" name="condition" onclick="starting='r'"> Random</label><br></td>
 	</tr>
   <tr>
     <td><label><input type="checkbox" name="impulse[]"> Left</label></td>
     <td><label><input type="checkbox" name="impulse[]" checked> Center</label></td>
     <td><label><input type="checkbox" name="impulse[]"> Right</label><br></td>
     <td>
-      Seed:
+      <label for="seed">Seed:</label>
     </td>
     <td colspan="3">
       <input type="text" id="seed" onchange="set_seed()" onclick="this.select();">
@@ -42,9 +42,9 @@
       Steps: <input type="number" id="steps" value="20" min="1" max="200">
       <input type="button" id="run" value="Run" onclick="start(true)">
     </td>
-    <td><label>Append<br><input type="radio" name="scroll" onclick="scrollmode='append'"></label></td>
-    <td><label>Scroll<br><input type="radio" name="scroll" onclick="scrollmode='scroll'" checked></label></td>
-    <td><label>Redraw<br><input type="radio" name="scroll" onclick="scrollmode='redraw'"></label></td>
+    <td><label><input type="radio" name="scroll" onclick="scrollmode='append'"> Append</label></td>
+    <td><label><input type="radio" name="scroll" onclick="scrollmode='scroll'" checked> Scroll</label></td>
+    <td><label><input type="radio" name="scroll" onclick="scrollmode='redraw'"> Redraw</label></td>
     </tr>
   </table>
   
