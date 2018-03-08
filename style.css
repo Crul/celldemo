@@ -155,14 +155,11 @@ tr.rulecomponents > td > span {
 
 #canvastable tr.currrow td {
 	border-color: #ccf;
-}
-	
-#canvastable tr.currrow td:hover {
 	cursor: pointer;
-	border-color: #00f;
 }
 
-#canvastable tr td.nextcell {
+#canvastable tr td.nextcell,
+#canvastable tr.currrow td.nextcell {
 	border-color: #f00;
 }
 

@@ -103,7 +103,8 @@ function draw_row() {
 	
     for (var i = 0; i < width; i++) {
 		currrowelem.append($("<td>")
-			.css("backgroundColor", (currstate[i] ? "#000" : "#fff")));
+			.css("backgroundColor", (currstate[i] ? "#000" : "#fff"))
+			.hover(oncellhover, oncellhoverout));
     }
 	
 	currrowelem.addClass("currrow");
@@ -115,12 +116,17 @@ function restart() {
 	setTimeout(clear_all, 15);
 }
 
-function oncellhover(ev) {	
+function oncellhover(ev) {
 	var rowindex = $(ev.target.parentElement).index();
-	if (rowindex != currrow + 1)
+	var currrowindex = $(".currrow").index();
+	console.log(rowindex, currrowindex);
+	if (rowindex > (currrowindex + 1))
 		return;
 	
 	var cell = $(ev.target).addClass("nextcell");
+	if (rowindex == 0)
+		return;
+	
 	var cellindex = cell.index();
 	var parentcells = $(ev.target.parentElement.parentElement)
 		.find("tr")
