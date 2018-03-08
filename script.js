@@ -39,7 +39,6 @@ function next_step(){
 		next_row();
 }
 
-
 function next_row() {
     for (var i = 0; i < width; i++) {
         //calculate each cell in the next state of the simulation
@@ -138,7 +137,6 @@ function oncellhover(ev) {
 	bincomp += iscellactive(cellparentcenter) ? "1" : "0";
 	bincomp += iscellactive(cellparentright) ? "1" : "0";
 	
-	console.log(bincomp);
 	var isnextactive = $("#rcc" + bincomp).is(":checked");
 	$("#rct" + bincomp).addClass("active" + (isnextactive ? "on" : "off"));
 	
