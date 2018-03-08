@@ -184,7 +184,9 @@ function clear_all(seedbits) {
     nextstate = new Array(width);
 
 	if (seedbits) {
-		currstate = seedbits;
+		for (var i = 0; i < width; i++) {
+			currstate[i] = seedbits[i % seedbits.length];
+		}
 		
 	} else {
 		var impulse = document.getElementsByName("impulse[]");
