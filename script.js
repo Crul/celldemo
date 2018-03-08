@@ -69,7 +69,9 @@ function next_row() {
 		stepcount--;
 	
     if (timer && stepcount > 0)
-		setTimeout(next_row, 10);
+		timer = setTimeout(next_row, 10);
+	else
+		timer = clearTimeout(timer);
 }
 
 function draw_row() {
