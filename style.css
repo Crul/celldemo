@@ -28,10 +28,13 @@ input[type=number] {
 	padding: 0 30px;
 }
 
-#ruletable > tbody > tr > td#rule_ {
-	width: 90px;
-	font-size: 300%;
+#ruletable > tbody > tr > td#rulecell {
 	padding: 0;
+}
+
+#rule_ {
+	width: 90px;
+	font-size: 250%;
 }
 
 #ruletable > tbody > tr:first-child > td,

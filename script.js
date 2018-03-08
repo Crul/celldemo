@@ -266,13 +266,13 @@ function rule_xor(num) {
 	}
 	
     rule ^= num;
-    document.getElementById("rule_").innerHTML = rule + "";
+    $("#rule_").val(rule);
 }
 
 function rule_set(num) {
     //set the simulation's next state rule set to a certain Wolfram number
     rule = Math.floor(num % 256);
-    document.getElementById("rule_").innerHTML = rule + "";
+    $("#rule_").val(rule);
 
     //set or clear each checkbox on the page
     var checks = document.getElementsByName("rule[]");
