@@ -7,6 +7,7 @@ var timer;
 var currrow = 0;
 var squaresize;
 var width, height;
+var stepcount = -1;
 
 $(document).ready(init);
 
@@ -38,6 +39,7 @@ function next_step(){
 		next_row();
 }
 
+
 function next_row() {
     for (var i = 0; i < width; i++) {
         //calculate each cell in the next state of the simulation
@@ -63,7 +65,11 @@ function next_row() {
 	
 	draw_row();
 	
-    if (timer) setTimeout(next_row, 10);
+	if (stepcount > 0)
+		stepcount--;
+	
+    if (timer && stepcount > 0)
+		setTimeout(next_row, 10);
 }
 
 function draw_row() {
@@ -206,9 +212,13 @@ function clear_all() {
 	draw_row();
 }
 
-function start(){
-    if (!timer)
-		timer = setTimeout(next_row, 10);
+function start(limitedsteps){
+    if (timer)
+		return;
+	
+	stepcount = (limitedsteps ? parseInt($("#steps").val()) : -1);
+	
+	timer = setTimeout(next_row, 10);
 }
 
 function stop() {
